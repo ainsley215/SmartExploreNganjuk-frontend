@@ -166,7 +166,7 @@ function DestinationDetail() {
 
   // 1. Fetch data detail wisata dari Flask backend
   useEffect(() => {
-    fetch(`http://localhost:5000/destinations/${id}`)
+    fetch(`https://smartexplorenganjuk-production.up.railway.app/destinations/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Data destinasi tidak ditemukan")
         return res.json()

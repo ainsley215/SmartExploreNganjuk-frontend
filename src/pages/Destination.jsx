@@ -31,7 +31,7 @@ function Destination() {
 
   useEffect(() => {
     // Ambil data dari Flask
-    fetch("http://localhost:5000/destinations")
+    fetch("https://smartexplorenganjuk-production.up.railway.app/destinations")
       .then((res) => res.json())
       .then((data) => {
         setDestinations(data)

@@ -50,7 +50,7 @@ function HomeGuest() {
   const fetchAIRecommendation = (keyword) => {
     setLoading(true)
 
-    fetch(`http://localhost:5000/api/rekomendasi?q=${encodeURIComponent(keyword)}`)
+    fetch(`https://smartexplorenganjuk-production.up.railway.app/api/rekomendasi?q=${encodeURIComponent(keyword)}`)
       .then((res) => {
         if (!res.ok) throw new Error("Gagal mengambil data dari AI backend")
         return res.json()
