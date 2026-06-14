@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 
 function UserRecommendation({ allPlaces }) {
-  // Ambil 3 data, kalau belum ada data gunakan array kosong []
-  
+  // 1. Ambil data dari localStorage
   const saved = localStorage.getItem("myFavorites");
   const favorites = saved ? JSON.parse(saved) : [];
-  const displayedPlaces = (allPlaces ?? []).slice(0, 3);
+  
+  // 2. Gunakan 'favorites' untuk ditampilkan (bukan 'allPlaces' lagi)
+  // .slice(-3) mengambil 3 data terakhir, .reverse() membaliknya agar terbaru di depan
+  const displayedPlaces = [...favorites].slice(-3).reverse();
+
   return (
     <section id="destinasi" className="bg-[#E6F0E5] py-16">
       <div className="max-w-7xl mx-auto px-6">
@@ -16,9 +19,9 @@ function UserRecommendation({ allPlaces }) {
           </Link>
         </div>
 
-        {/* Cek apakah data benar-benar kosong untuk menampilkan pesan loading */}
-        {(!allPlaces || allPlaces.length === 0) ? (
-          <p className="text-gray-500">Memuat destinasi...</p>
+        {/* Cek apakah data favorit KOSONG */}
+        {favorites.length === 0 ? (
+          <p className="text-gray-500">Belum ada destinasi favorit yang ditambahkan.</p>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             {displayedPlaces.map((place, index) => (
@@ -27,7 +30,6 @@ function UserRecommendation({ allPlaces }) {
                 to={`/destination/${place.name}`}
                 className="block bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
               >
-                {/* ... konten kartu tetap sama ... */}
                 <img src={place.image} alt={place.name} className="w-full h-56 object-cover" />
                 <div className="p-5">
                   <h3 className="font-bold text-xl">{place.name}</h3>
