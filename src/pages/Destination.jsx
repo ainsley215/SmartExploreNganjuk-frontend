@@ -1,25 +1,3 @@
-// import Navbar from "../components/Navbar"
-
-// function Destination() {
-//   return (
-//     <>
-//       <Navbar />
-
-//       <div className="min-h-screen bg-[#E6F0E5] p-10">
-//         <h1 className="text-5xl font-bold">
-//           Semua Destinasi
-//         </h1>
-
-//         <p className="mt-4">
-//           Daftar wisata di Kabupaten Nganjuk.
-//         </p>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Destination
-
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom" // Digunakan untuk navigasi ke detail
 import Navbar from "../components/Navbar"
