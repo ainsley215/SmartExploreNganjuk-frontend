@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function UserRecommendation() {
   const navigate = useNavigate()
@@ -43,12 +44,12 @@ function UserRecommendation() {
             Berdasarkan Minatmu..
           </h2>
 
-          <button
+          <Link
+            to="/favorite"
             className="font-medium hover:underline"
-            onClick={() => navigate('/favorite')} // 3. Arahkan ke path yang diinginkan
           >
             Lihat Semua →
-          </button>
+          </Link>
 
         </div>
 
