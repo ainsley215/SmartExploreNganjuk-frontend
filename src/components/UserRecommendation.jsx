@@ -1,35 +1,9 @@
-import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
 
-function UserRecommendation() {
-  const navigate = useNavigate()
-
-  const places = [
-    {
-      name: "Jolotundo Glamping & Edupark",
-      location: "Loceret, Nganjuk",
-      rating: 4.4,
-      category: "Alam",
-      image:
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200",
-    },
-    {
-      name: "Taman Nyawiji",
-      location: "Payaman, Nganjuk",
-      rating: 4.5,
-      category: "Taman Kota",
-      image:
-        "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?q=80&w=1200",
-    },
-    {
-      name: "Museum Anjuk Ladang",
-      location: "Kauman, Nganjuk",
-      rating: 4.4,
-      category: "Sejarah",
-      image:
-        "https://images.unsplash.com/photo-1566127992631-137a642a90f4?q=80&w=1200",
-    },
-  ]
+function UserRecommendation({ allPlaces }) { // Anggap allPlaces adalah data dari favorit/database
+  
+  // LOGIKA: Ambil data, lalu potong hanya 3 pertama
+  const displayedPlaces = allPlaces.slice(0, 3);
 
   return (
     <section id="destinasi" className="bg-[#E6F0E5] py-16">
@@ -42,7 +16,7 @@ function UserRecommendation() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {places.map((place, index) => (
+          {displayedPlaces.map((place, index) => (
             <Link
               key={index}
               to={`/destination/${place.name}`}
