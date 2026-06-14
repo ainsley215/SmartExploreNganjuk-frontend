@@ -43,7 +43,10 @@ function UserRecommendation() {
             Berdasarkan Minatmu..
           </h2>
 
-          <button className="font-medium hover:underline">
+          <button
+            className="font-medium hover:underline"
+            onClick={() => navigate('/favorite')} // 3. Arahkan ke path yang diinginkan
+          >
             Lihat Semua →
           </button>
 
@@ -54,7 +57,7 @@ function UserRecommendation() {
           {places.map((place, index) => (
             <div
               key={index}
-              onClick={() => navigate("/destination")}
+              onClick={() => navigate(`/destination/${place.name}`)}
               className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
             >
 
