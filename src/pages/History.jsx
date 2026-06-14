@@ -8,7 +8,8 @@ export default function History() {
 
   useEffect(() => {
     // Mengambil data dari backend Flask
-    fetch('http://127.0.0.1:5000/destinations')
+    fetch('https://smartexplorenganjuk-production.up.railway.app/destinations')
+    // fetch('http://127.0.0.1:5000/destinations')
       .then((res) => res.json())
       .then((result) => {
         setData(result);

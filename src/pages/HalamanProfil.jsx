@@ -10,7 +10,7 @@ export default function Profil() {
   });
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/profile')
+    fetch('https://smartexplorenganjuk-production.up.railway.app/profile')
       .then(res => res.json())
       .then(data => setUser(data))
       .catch(err => console.log("Backend belum terhubung, menggunakan data dummy."));
