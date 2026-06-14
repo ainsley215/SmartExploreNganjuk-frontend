@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 
-function UserRecommendation({ allPlaces }) { // Anggap allPlaces adalah data dari favorit/database
-  
-  // LOGIKA: Ambil data, lalu potong hanya 3 pertama
-  const displayedPlaces = allPlaces.slice(0, 3);
+function UserRecommendation({ allPlaces }) {
+  // Teknik aman: Jika allPlaces undefined/null, ganti dengan array kosong []
+  // Sehingga .slice() tidak akan pernah error
+  const displayedPlaces = (allPlaces ?? []).slice(0, 3);
+
+  // Jika tidak ada data sama sekali, kita bisa memberikan tampilan kosong atau null
+  if (!allPlaces || allPlaces.length === 0) {
+    return null; // Atau ganti dengan <p>Loading...</p>
+  }
 
   return (
     <section id="destinasi" className="bg-[#E6F0E5] py-16">
