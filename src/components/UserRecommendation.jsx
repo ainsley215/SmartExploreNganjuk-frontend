@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 
 function UserRecommendation({ allPlaces }) {
   // Ambil 3 data, kalau belum ada data gunakan array kosong []
+  
+  const saved = localStorage.getItem("myFavorites");
+  const favorites = saved ? JSON.parse(saved) : [];
   const displayedPlaces = (allPlaces ?? []).slice(0, 3);
-
   return (
     <section id="destinasi" className="bg-[#E6F0E5] py-16">
       <div className="max-w-7xl mx-auto px-6">
