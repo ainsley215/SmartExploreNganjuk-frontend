@@ -9,15 +9,16 @@ function Favorite() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const storageKey = user.username ? `favorites_${user.username}` : "favorites_guest";
 
-  // 2. Ambil data dari localStorage
+  // 2. State untuk daftar favorit
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem(storageKey);
     return saved ? JSON.parse(saved) : [];
   });
 
+  // 3. State untuk filter kategori
   const [filter, setFilter] = useState("Semua");
 
-  // 3. Gunakan useEffect agar data di localStorage selalu diperbarui saat 'favorites' berubah
+  // 4. Sinkronisasi otomatis ke localStorage setiap kali state favorites berubah
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(favorites));
   }, [favorites, storageKey]);
@@ -31,7 +32,7 @@ function Favorite() {
   const filteredData =
     filter === "Semua"
       ? favorites
-      : favorites.filter((item) => item.category === filter);
+      : favorites.filter((item) => item.kategori === filter);
 
   return (
     <>
@@ -47,10 +48,11 @@ function Favorite() {
               <button
                 key={item}
                 onClick={() => setFilter(item)}
-                className={`px-5 py-2 rounded-full border ${filter === item
+                className={`px-5 py-2 rounded-full border ${
+                  filter === item
                     ? "bg-green-600 text-white"
                     : "bg-white"
-                  }`}
+                }`}
               >
                 {item}
               </button>
@@ -59,13 +61,13 @@ function Favorite() {
 
           {/* Card */}
           <div className="grid md:grid-cols-3 gap-8">
-            {filteredData.map((wisata) => ( // Menggunakan 'wisata' agar sesuai dengan data CSV
+            {filteredData.map((wisata) => (
               <div
                 key={wisata.id}
                 className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200" // Placeholder sesuai permintaan
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200"
                   alt={wisata.nama}
                   className="h-56 w-full object-cover cursor-pointer"
                   onClick={() => navigate(`/destination/${wisata.id}`)}
@@ -73,7 +75,8 @@ function Favorite() {
 
                 <div className="p-5">
                   <h3 className="font-bold text-xl">{wisata.nama}</h3>
-                  <p className="text-gray-500 mt-1">📍 Kabupaten Nganjuk</p> {/* Lokasi default */}
+                  <p className="text-gray-500 mt-1">📍 Kabupaten Nganjuk</p>
+                  
                   <div className="flex justify-between items-center mt-4">
                     <span className="text-sm bg-gray-100 px-3 py-1 rounded-full">
                       {wisata.kategori}
@@ -90,7 +93,7 @@ function Favorite() {
             ))}
           </div>
 
-          {/* Jika kosong */}
+          {/* Jika favorit kosong */}
           {filteredData.length === 0 && (
             <div className="text-center mt-20">
               <h3 className="text-2xl font-semibold">Belum ada favorit</h3>
