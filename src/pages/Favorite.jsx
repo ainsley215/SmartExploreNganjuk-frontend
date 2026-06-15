@@ -47,11 +47,10 @@ function Favorite() {
               <button
                 key={item}
                 onClick={() => setFilter(item)}
-                className={`px-5 py-2 rounded-full border ${
-                  filter === item
+                className={`px-5 py-2 rounded-full border ${filter === item
                     ? "bg-green-600 text-white"
                     : "bg-white"
-                }`}
+                  }`}
               >
                 {item}
               </button>
@@ -60,25 +59,27 @@ function Favorite() {
 
           {/* Card */}
           <div className="grid md:grid-cols-3 gap-8">
-            {filteredData.map((place) => (
+            {filteredData.map((wisata) => ( // Menggunakan 'wisata' agar sesuai dengan data CSV
               <div
-                key={place.id}
+                key={wisata.id}
                 className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition"
               >
                 <img
-                  src={place.image || "https://via.placeholder.com/400"}
-                  alt={place.name}
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200" // Placeholder sesuai permintaan
+                  alt={wisata.nama}
                   className="h-56 w-full object-cover cursor-pointer"
-                  onClick={() => navigate(`/destination/${place.id}`)}
+                  onClick={() => navigate(`/destination/${wisata.id}`)}
                 />
 
                 <div className="p-5">
-                  <h3 className="font-bold text-xl">{place.name}</h3>
-                  <p className="text-gray-500 mt-1">📍 {place.location}</p>
+                  <h3 className="font-bold text-xl">{wisata.nama}</h3>
+                  <p className="text-gray-500 mt-1">📍 Kabupaten Nganjuk</p> {/* Lokasi default */}
                   <div className="flex justify-between items-center mt-4">
-                    <span>⭐ {place.rating}</span>
+                    <span className="text-sm bg-gray-100 px-3 py-1 rounded-full">
+                      {wisata.kategori}
+                    </span>
                     <button
-                      onClick={() => removeFavorite(place.id)}
+                      onClick={() => removeFavorite(wisata.id)}
                       className="text-red-500 text-xl"
                     >
                       ❤️
