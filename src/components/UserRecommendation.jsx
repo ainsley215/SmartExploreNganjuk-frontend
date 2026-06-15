@@ -1,12 +1,20 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-function UserRecommendation({ allPlaces }) {
-  // 1. Ambil data dari localStorage
-  const saved = localStorage.getItem("myFavorites");
-  const favorites = saved ? JSON.parse(saved) : [];
-  
-  // 2. Gunakan 'favorites' untuk ditampilkan (bukan 'allPlaces' lagi)
-  // .slice(-3) mengambil 3 data terakhir, .reverse() membaliknya agar terbaru di depan
+function UserRecommendation() {
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    // 1. Ambil user dari localStorage untuk menentukan kunci yang sama
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const storageKey = user.username ? `favorites_${user.username}` : "favorites_guest";
+    
+    // 2. Ambil data dengan kunci yang sudah disinkronkan
+    const saved = localStorage.getItem(storageKey);
+    const parsed = saved ? JSON.parse(saved) : [];
+    setFavorites(parsed);
+  }, []); // Berjalan sekali saat komponen dimuat
+
   const displayedPlaces = [...favorites].slice(-3).reverse();
 
   return (
@@ -19,7 +27,6 @@ function UserRecommendation({ allPlaces }) {
           </Link>
         </div>
 
-        {/* Cek apakah data favorit KOSONG */}
         {favorites.length === 0 ? (
           <p className="text-gray-500">Belum ada destinasi favorit yang ditambahkan.</p>
         ) : (
@@ -27,13 +34,13 @@ function UserRecommendation({ allPlaces }) {
             {displayedPlaces.map((place, index) => (
               <Link
                 key={index}
-                to={`/destination/${place.name}`}
+                to={`/destination/${place.id}`} // Pastikan navigasi menggunakan ID
                 className="block bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer"
               >
-                <img src={place.image} alt={place.name} className="w-full h-56 object-cover" />
+                <img src={place.image || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800"} alt={place.nama || place.name} className="w-full h-56 object-cover" />
                 <div className="p-5">
-                  <h3 className="font-bold text-xl">{place.name}</h3>
-                  <p className="text-gray-500 mt-2">📍 {place.location}</p>
+                  <h3 className="font-bold text-xl">{place.nama || place.name}</h3>
+                  <p className="text-gray-500 mt-2">📍 {place.location || "Nganjuk"}</p>
                 </div>
               </Link>
             ))}
