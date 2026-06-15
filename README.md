@@ -1,16 +1,38 @@
-# React + Vite
+# Smart Explore Nganjuk - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend aplikasi wisata Nganjuk yang dibangun menggunakan React, Vite, dan Tailwind CSS.
 
-Currently, two official plugins are available:
+## Fitur
+- UI/UX modern dengan Tailwind CSS.
+- Pencarian dan filter destinasi berbasis AI.
+- Sistem favorit (Favorites) yang tersimpan di LocalStorage.
+- Integrasi dengan Backend API Python (Flask).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Prasyarat
+- [Node.js](https://nodejs.org/) (versi 18 ke atas disarankan)
+- npm atau yarn
 
-## React Compiler
+## Instalasi & Cara Menjalankan
+1. Clone repository ini.
+2. Masuk ke folder proyek: `cd nama-folder-repo`
+3. Install dependencies:
+   ```bash
+   npm install
+Jalankan aplikasi di development mode:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Bash
+npm run dev
+Buka http://localhost:5173 di browser kamu.
 
-## Expanding the ESLint configuration
+Deployment (Vercel)
+Aplikasi ini di-deploy di Vercel. Pastikan file vercel.json sudah ada di root folder untuk menangani routing SPA:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+JSON
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
