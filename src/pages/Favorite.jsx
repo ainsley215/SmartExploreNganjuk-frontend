@@ -4,35 +4,29 @@ import Navbar from "../components/Navbar";
 
 function Favorite() {
   const navigate = useNavigate();
-
-  // 1. Ambil informasi user untuk menentukan kunci penyimpanan
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   const storageKey = user.username ? `favorites_${user.username}` : "favorites_guest";
 
-  // 2. State untuk daftar favorit
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem(storageKey);
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 3. State untuk filter kategori
   const [filter, setFilter] = useState("Semua");
 
-  // 4. Sinkronisasi otomatis ke localStorage setiap kali state favorites berubah
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(favorites));
   }, [favorites, storageKey]);
 
-  // Fungsi hapus favorit
   const removeFavorite = (id) => {
     setFavorites(favorites.filter((item) => item.id !== id));
   };
 
-  // Logika Filter
+  // Logika Filter diperbarui untuk mencakup 'Hidden Gem'
   const filteredData =
     filter === "Semua"
       ? favorites
-      : favorites.filter((item) => item.kategori === filter);
+      : favorites.filter((item) => item.kategori?.toLowerCase() === filter.toLowerCase());
 
   return (
     <>
@@ -42,16 +36,16 @@ function Favorite() {
           <p className="text-lg">Tempat yang kamu suka</p>
           <h1 className="text-5xl font-bold mt-2 mb-10">Koleksi Favoritmu!</h1>
 
-          {/* Filter */}
-          <div className="flex gap-3 mb-10">
-            {["Semua", "Alam", "Taman", "Edukasi"].map((item) => (
+          {/* Filter Bar yang konsisten dengan kategori sistemmu */}
+          <div className="flex flex-wrap gap-3 mb-10">
+            {["Semua", "Alam", "Taman", "Edukasi", "Hidden Gem"].map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(item)}
-                className={`px-5 py-2 rounded-full border ${
+                className={`px-6 py-2 rounded-full border transition ${
                   filter === item
-                    ? "bg-green-600 text-white"
-                    : "bg-white"
+                    ? "bg-green-600 text-white border-green-600"
+                    : "bg-white border-gray-200 hover:border-green-500"
                 }`}
               >
                 {item}
@@ -59,7 +53,7 @@ function Favorite() {
             ))}
           </div>
 
-          {/* Card */}
+          {/* Card Section */}
           <div className="grid md:grid-cols-3 gap-8">
             {filteredData.map((wisata) => (
               <div
@@ -78,12 +72,12 @@ function Favorite() {
                   <p className="text-gray-500 mt-1">📍 Kabupaten Nganjuk</p>
                   
                   <div className="flex justify-between items-center mt-4">
-                    <span className="text-sm bg-gray-100 px-3 py-1 rounded-full">
+                    <span className="text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">
                       {wisata.kategori}
                     </span>
                     <button
                       onClick={() => removeFavorite(wisata.id)}
-                      className="text-red-500 text-xl"
+                      className="text-red-500 text-xl hover:scale-110 transition"
                     >
                       ❤️
                     </button>
@@ -93,10 +87,9 @@ function Favorite() {
             ))}
           </div>
 
-          {/* Jika favorit kosong */}
           {filteredData.length === 0 && (
             <div className="text-center mt-20">
-              <h3 className="text-2xl font-semibold">Belum ada favorit</h3>
+              <h3 className="text-2xl font-semibold text-gray-600">Belum ada favorit di kategori ini</h3>
             </div>
           )}
         </div>
